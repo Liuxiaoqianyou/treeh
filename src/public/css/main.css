@@ -51,20 +51,15 @@ textarea {
 .border-bottom {
     border-bottom: 1px solid #f1f1f1;
 }
-.font-size26{
-    font-size: 26px;
-}
-.padding20{
-    padding: 1rem 5rem;
-}
-/* .marglef20xp{
-    margin-left: 20px;
-} */
-.font-size16{
-    font-size: 16px;
-}
+
 @media only screen and (min-width: 768px) and (max-width: 2048px) {
     .marglef20xp{
         margin-left: 20px;
+    }
+    .font-size26{
+        font-size: 26px;
+    }
+    .padding20{
+        padding: 1rem 5rem;
     }
 }

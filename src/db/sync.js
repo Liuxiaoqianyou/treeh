@@ -3,9 +3,10 @@
  * @author 刘小倩
  */
 const seq = require('./seq')
+require('./model/index')
 
 //测试连接
-seq.authenticatee().then(() => {
+seq.authenticate().then(() => {
     console.log('auth ok')
 }).catch(() => {
     console.log('auth err')
