@@ -10,6 +10,7 @@ const redisStore = require('koa-redis')
 
 const { REDIS_CONF } = require('./conf/db')
 const {isProd} = require('./utils/env')
+const { SESSION_SECRET_KEY } = require('./conf/secretKeys')
 
 //路由
 const index = require('./routes/index')
@@ -41,7 +42,7 @@ app.use(views(__dirname + '/views', {
 
 //session配置
 //加密
-app.keys = ['DSDffew@#$9000']
+app.keys = [SESSION_SECRET_KEY]
 //生成中间件给koa引用
 app.use(session({
   key:'treehole.sid', //cookie name 默认是 'koa.sid'

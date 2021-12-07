@@ -14,6 +14,11 @@ const User = seq.define('user', {
         unique: true, //唯一 不能重复
         comment: '用户名唯一'
     },
+    password: {
+        type: STRING,
+        allowNull: false,
+        comment: '密码'
+    },
     nickName: {
         type: STRING,
         allowNull: false,
