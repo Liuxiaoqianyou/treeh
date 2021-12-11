@@ -67,11 +67,11 @@
     // 创建微博失败
     createBlogFailInfo: {
         errno: 11001,
-        message: '创建微博失败，请重试'
+        message: '创建动态失败，请重试'
     },
     // 删除微博失败
     deleteBlogFailInfo: {
         errno: 11002,
-        message: '删除微博失败，请重试'
+        message: '删除动态失败，请重试'
     }
 }
