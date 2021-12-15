@@ -1,6 +1,6 @@
 /**
- * @description 微博 数据格式校验
- * @author 双越老师
+ * @description 动态 数据格式校验
+ * @author 刘小倩
  */
 
 const validate = require('./_validate')
@@ -20,11 +20,11 @@ const SCHEMA = {
 }
 
 /**
- * 校验微博数据格式
- * @param {Object} data 微博数据
+ * 校验动态数据格式
+ * @param {Object} data 动态数据
  */
-function blogValidate(data = {}) {
+function holeValidate(data = {}) {
     return validate(SCHEMA, data)
 }
 
-module.exports = blogValidate
+module.exports = holeValidate

@@ -2,7 +2,10 @@
  * @description 首页 controller
  * @author 刘小倩
  */
-    
+
+
+//做过滤
+const xss = require('xss')
 const{ createHole } = require('../services/hole')
 const { SuccessModel, ErrorModel} = require('../model/ResModel')
 const { createBlogFailInfo } = require('../model/ErrorInfo')
@@ -15,7 +18,7 @@ const { createBlogFailInfo } = require('../model/ErrorInfo')
   try {
      const hole = await createHole({
         userId,
-        content,
+        content: xss(content),
         image
      }) 
      return new SuccessModel(hole)
