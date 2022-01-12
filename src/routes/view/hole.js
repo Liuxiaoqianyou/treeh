@@ -13,4 +13,8 @@
     await ctx.render('index', {})
  })
 
+ router.get('/release', loginRedirect, async (ctx, next) => {
+   await ctx.render('release', {})
+})
+
  module.exports = router

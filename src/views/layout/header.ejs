@@ -43,11 +43,30 @@
     <script src="/javascripts/jquery.atwho.js"></script>
     <% } %>
 </head>
+<script>
+    $(function() {
+            // 退出登录
+        $('#btn-logout').click(function() {
+            if (confirm('是否确定退出登录？') === false) {
+                return
+            }
+            ajax.post('/api/user/logout', function(err, data) {
+                if (err) {
+                    console.error(err)
+                    return
+                }
+                alert('已成功退出')
+                location.href = '/login'
+            })
+        })
+    })
+</script>
 <body>
 
     <% if (locals.isNav) { %>
     <%# 有导航%>
     <nav class="navbar navbar-expand-lg navbar-dark bg-info padding20">
+        <img src='/images/logo.jpg' width="50"/>
         <a class="navbar-brand font-size26" href="/">树洞</a>
         <ul class="navbar-nav mr-auto" style="flex-direction: row;">
             <li class="nav-item">
@@ -69,9 +88,32 @@
                 </a>
             </li>
             <li class="nav-item">
+                <a class="nav-link marglef20xp" href="/release">
+                    <i class="fa fa-comment"></i>
+                    发布
+                </a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link marglef20xp" href="/setting">
                     <i class="fa fa-gear"></i>
                     设置
+                </a>
+            </li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+            <li class="nav-item">
+                <a class="nav-link " href="/changePassword">
+                    修改密码
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link " >
+                    |
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link "  id="btn-logout">
+                    退出登录
                 </a>
             </li>
         </ul>
