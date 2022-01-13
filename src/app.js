@@ -15,6 +15,7 @@ const {isProd} = require('./utils/env')
 const { SESSION_SECRET_KEY } = require('./conf/secretKeys')
 
 //路由
+const profileAPIRouter = require('./routes/api/hole-profile')
 const holeHomeAPIRouter = require('./routes/api/hole-home')
 const holeViewRouter = require('./routes/view/hole')
 const utilsAPIRouter = require('./routes/api/utils')
@@ -72,6 +73,7 @@ app.use(session({
 // })
 
 // routes 注册路由
+app.use(profileAPIRouter.routes(), profileAPIRouter.allowedMethods())
 app.use(holeHomeAPIRouter.routes(), holeHomeAPIRouter.allowedMethods())
 app.use(holeViewRouter.routes(), holeViewRouter.allowedMethods())
 app.use(utilsAPIRouter.routes(), utilsAPIRouter.allowedMethods())

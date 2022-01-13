@@ -78,6 +78,12 @@ textarea {
 .carousel-control-prev:hover{
     opacity: 0.2;
 }
+.navbar-right{
+    /* font-size: 10px; */
+}
+.navbar-right{
+    flex-direction: row;
+}
 
 @media only screen and (min-width: 768px) and (max-width: 2048px) {
     .marglef20xp{
@@ -97,5 +103,12 @@ textarea {
     }
     .navbar .navbar-brand{
         display: none;
+    }
+    .navbar-nav .nav-item{
+        font-size: 10px;
+        margin-left: 2px;
+    }
+    .carousel-item img{
+         height: 200px !important;
     }
 }
