@@ -1,17 +1,17 @@
-<%- include('layout/header', { title: '树洞 - 个人主页', isNav: true, list: true })%>
+<%- include('layout/header', { title: '树洞 - 广场', isNav: true, list: true })%>
 
 <div class="container margin-top-20">
     <div class="row">
         <!-- 左侧 -->
         <div class="col-8">
-            <h4 class="margin-bottom-20 padding-bottom-10 border-bottom">个人空间</h4>
+            <h4 class="margin-bottom-20 padding-bottom-10 border-bottom">树洞广场</h4>
 
             <% if (blogData.isEmpty) { %>
                 <div>
                     <center>暂无数据</center>
                 </div>
             <% } else { %>
-                <!-- 微博列表 第一页 -->
+                <!-- 微博列表 -->
                 <div id="container-weibo-list" class="weibo-list">
                     <%- include('widgets/blog-list', {
                         blogList: blogData.blogList
@@ -24,26 +24,11 @@
                         pageIndex: blogData.pageIndex,
                         count: blogData.count,
                         containerSelector: '#container-weibo-list',
-                        api: '/api/profile/loadMore/' + 'aaa',
+                        api: '/api/square/loadMore',
                     })%>
                 <% } %> <!-- 加载更多 结束 -->
             <% } %>
         </div> <!-- 左侧结束 -->
-
-        <!-- 右侧 -->
-        <div class="col-4">
-           <!-- 个人信息 -->
-           <!-- <div class="right-item">
-            <%- include('widgets/user-info', {
-                userInfo: userData.userInfo,
-                isMe: userData.isMe,
-                amIFollowed: userData.amIFollowed,
-                atCount: userData.atCount
-            });%>
-        </div> -->
-
-
-        </div> <!-- 右侧结束 -->
     </div>
 </div>
 

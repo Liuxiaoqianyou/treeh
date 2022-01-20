@@ -7,6 +7,7 @@
  const router = require('koa-router')()
  const { loginRedirect } = require('../../middlewares/loginChecks')
  const { getProfileHoleList } = require('../../controller/hole-profile')
+ const { getSquareBlogList } = require('../../controller/hole-square')
 
 
 //首页
@@ -42,7 +43,7 @@
    }
 
 
-   //获取微博第一页数据 
+   //获取动态第一页数据 
    //controller
    const result = await getProfileHoleList(curUserName, 0)
    const {isEmpty, blogList, pageSize, pageIndex, count} = result.data
@@ -63,6 +64,22 @@
    })
 })
 
+// 广场
+router.get('/square', loginRedirect, async (ctx, next) => {
+   // 获取动态数据，第一页
+   const result = await getSquareBlogList(0)
+   const { isEmpty, blogList, pageSize, pageIndex, count } = result.data || {}
+
+   await ctx.render('square', {
+       blogData: {
+           isEmpty,
+           blogList,
+           pageSize,
+           pageIndex,
+           count
+       }
+   })
+})
 
  //发布页
  router.get('/release', loginRedirect, async (ctx, next) => {
