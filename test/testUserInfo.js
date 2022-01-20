@@ -9,5 +9,6 @@
  */
 
 module.exports = {
-    COOKIE : 'treehole.sid=i8u6_hqO95pYiI5sLAQPfmoNGHdJX68C; treehole.sid.sig=5pMN7FXdqjv6CIWLGbLGhkmogCo'
+    USER_NAME: 'aaa',
+    COOKIE : 'treehole.sid=NiXD6JmaDtZ3PuXehZCGkFUJwHqhLoRK; treehole.sid.sig=V25FJRqUCpY-UQUlYkORTPoQjzU'
 }
