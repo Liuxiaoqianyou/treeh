@@ -5,7 +5,7 @@
 
 
  const server = require('../server')
- const {COOKIE} = require('../testUserInfo')
+ const { A_COOKIE } = require('../testUserInfo')
  
  //存储动态 id
  let BLOG_ID = ''
@@ -23,7 +23,7 @@
          content,
          image
      })
-     .set('cookie', COOKIE)
+     .set('cookie',  A_COOKIE)
      expect(res.body.errno).toBe(0)
      expect(res.body.data.content).toBe(content)
      expect(res.body.data.image).toBe(image)
