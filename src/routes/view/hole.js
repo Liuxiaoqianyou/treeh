@@ -10,11 +10,46 @@
  const { getSquareBlogList } = require('../../controller/hole-square')
  const { isExist } = require('../../controller/user')
  const { getFans, getFollowers } = require('../../controller/user-relation')
+ const { getHomeHoleList } = require('../../controller/hole-home')
 
 
 //首页
  router.get('/', loginRedirect, async (ctx, next) => {
-    await ctx.render('index', {})
+   const userInfo = ctx.session.userInfo
+   const { id: userId } = userInfo
+   
+   // 获取第一页数据
+   const result = await getHomeHoleList(userId)
+   const { isEmpty, blogList, pageSize, pageIndex, count } = result.data
+
+   // 获取粉丝
+   const fansResult = await getFans(userId)
+   const { count: fansCount, fansList } = fansResult.data
+
+   // 获取关注人列表
+   const followersResult = await getFollowers(userId)
+   const { count: followersCount, followersList } = followersResult.data
+   
+    await ctx.render('index', {
+      userData: {
+         userInfo: userInfo,
+         fansData: {
+            count: fansCount,
+            userList: fansList,
+         },
+         followersData: {
+            count: followersCount,
+            list: followersList
+         }
+      },
+      blogData: {
+         isEmpty,
+         blogList,
+         pageSize,
+         pageIndex,
+         count
+      }
+    })
  })
 
  

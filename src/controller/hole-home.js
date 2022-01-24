@@ -6,9 +6,10 @@
 
 //做过滤
 const xss = require('xss')
-const{ createHole } = require('../services/hole')
+const{ createHole, getFollowersHoleList } = require('../services/hole')
 const { SuccessModel, ErrorModel} = require('../model/ResModel')
 const { createBlogFailInfo } = require('../model/ErrorInfo')
+const { PAGE_SIZE } = require('../conf/constant')
 
 /**
  * 创建动态
@@ -28,6 +29,33 @@ const { createBlogFailInfo } = require('../model/ErrorInfo')
   }
 }
 
+/**
+ * 获取首页微博列表
+ * @param {number} userId userId
+ * @param {number} pageIndex page index
+ */
+ async function getHomeHoleList(userId, pageIndex = 0) {
+    const result = await getFollowersHoleList(
+        {
+            userId,
+            pageIndex,
+            pageSize: PAGE_SIZE
+        }
+    )
+    const { count, blogList } = result
+
+    // 返回
+    return new SuccessModel({
+        isEmpty: blogList.length === 0,
+        blogList,
+        pageSize: PAGE_SIZE,
+        pageIndex,
+        count
+    })
+}
+
+
 module.exports = {
-    create
+    create,
+    getHomeHoleList  
 }

@@ -3,7 +3,7 @@
  * @author 刘小倩
  */
 
- const { Hole, User } = require('../db/model/index')
+ const { Hole, User, UserRelation } = require('../db/model/index')
  const { formatUser,formatHole } = require('./_format')
 
 /**
@@ -62,7 +62,47 @@ async function getHoleListByUser({userName, pageIndex = 0, pageSize = 10}) {
    }
 }
 
+
+/**
+ * 获取关注者的微博列表（首页）
+ * @param {Object} param0 查询条件 { userId, pageIndex = 0, pageSize = 10 }
+ */
+ async function getFollowersHoleList({ userId, pageIndex = 0, pageSize = 10 }) {
+   const result = await Hole.findAndCountAll({
+       limit: pageSize, // 每页多少条
+       offset: pageSize * pageIndex, // 跳过多少条
+       order: [
+           ['id', 'desc']
+       ],
+       include: [
+           {
+               model: User,
+               attributes: ['userName', 'nickName', 'picture']
+           },
+           {
+               model: UserRelation,
+               attributes: ['userId', 'followerId'],
+               where: { userId }
+           }
+       ]
+   })
+
+   // 格式化数据
+   let blogList = result.rows.map(row => row.dataValues)
+   blogList = formatHole(blogList)
+   blogList = blogList.map(blogItem => {
+       blogItem.user = formatUser(blogItem.user.dataValues)
+       return blogItem
+   })
+
+   return {
+       count: result.count,
+       blogList
+   }
+}
+
  module.exports = {
     createHole,
-    getHoleListByUser
+    getHoleListByUser,
+    getFollowersHoleList
  }

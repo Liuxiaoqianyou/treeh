@@ -19,6 +19,11 @@ User.hasMany(UserRelation, {
     foreignKey: 'userId'
 })
 
+Hole.belongsTo(UserRelation, {
+    foreignKey: 'userId',
+    targetKey: 'followerId'
+})
+
 module.exports = {
     User,
     Hole,

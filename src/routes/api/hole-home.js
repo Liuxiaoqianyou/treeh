@@ -10,6 +10,8 @@
  const { create } = require('../../controller/hole-home')
  const { genValidator } = require('../../middlewares/validator')
  const holeValidate = require('../../validator/hole')
+ const { getHomeHoleList } = require('../../controller/hole-home')
+ const { getBlogListStr } = require('../../utils/hole')
 
   //前缀
   router.prefix('/api/hole')
@@ -22,5 +24,18 @@
     //controller，
     ctx.body = await create({userId, content, image})
 })
+
+// 加载更多
+router.get('/loadMore/:pageIndex', loginCheck, async (ctx, next) => {
+  let { pageIndex } = ctx.params
+  pageIndex = parseInt(pageIndex)  // 转换 number 类型
+  const { id: userId } = ctx.session.userInfo
+  const result = await getHomeHoleList(userId, pageIndex)
+  // 渲染模板
+  result.data.blogListTpl = getBlogListStr(result.data.blogList)
+
+  ctx.body = result
+})
+
 
   module.exports = router
