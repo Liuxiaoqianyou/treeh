@@ -54,17 +54,17 @@ test('获取aaa的关注人，应该有lxq', async () => {
 })
 
 // 获取 at 列表
-// test('获取张三的 at 列表，应该有李四', async () => {
-//     const res = await server
-//         .get('/api/user/getAtList')
-//         .set('cookie', A_COOKIE)
-//     const atList = res.body
-//     const hasUserName = atList.some(item => {
-//         // '昵称 - userName'
-//         return item.indexOf(`- ${L_USER_NAME}`) > 0
-//     })
-//     expect(hasUserName).toBe(true)
-// })
+test('获取张三的 at 列表，应该有李四', async () => {
+    const res = await server
+        .get('/api/user/getAtList')
+        .set('cookie', A_COOKIE)
+    const atList = res.body
+    const hasUserName = atList.some(item => {
+        // '昵称 - userName'
+        return item.indexOf(`- ${L_USER_NAME}`) > 0
+    })
+    expect(hasUserName).toBe(true)
+})
 
 // 取消关注
 test('aaa取消关注lxq，应该成功', async () => {

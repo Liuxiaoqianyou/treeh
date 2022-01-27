@@ -26,43 +26,117 @@
                 data-userName="<%= blog.user.userName%>"
                 data-nickName="<%= blog.user.nickName%>"
             >
-                <i class="fa fa-mail-reply"></i> 回复
+
+                <button type="button" class="btn btn-primary font-size16" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo"><i class="fa fa-mail-reply"></i>  回复</button>
+                 
             </a>
+
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">回复</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <form>
+                      <div class="form-group">
+                        <label for="recipient-name" class="col-form-label">收信人:</label>
+                        <input type="text" class="form-control fsname" id="recipient-name" disabled>
+                      </div>
+                      <div class="form-group">
+                        <label for="message-text" class="col-form-label">内容:</label>
+                        <textarea class="form-control fscontent" id="message-text"></textarea>
+                      </div>
+                    </form>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary hfqx" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary hffs">发送</button>
+                  </div>
+                </div>
+              </div>
+            </div>
             <% } %>
         </div>
     </div>
+   
 <% }) %>
 
 <script>
 $(function () {
-    // 设置焦点
-    function setCursor(el, st, end) {
-        if (el.setSelectionRange) {
-            el.focus()
-            el.setSelectionRange(st, end)
-        } else if (el.createTextRange) {
-            var range = el.createTextRange()
-            range.collapse(true)
-            range.moveEnd('character',end)
-            range.moveStart('character',st)
-            range.select()
-        }
-    }
-
-    // 回复
-    var $textContent = $('#text-content')
+  
     $('.blog-list-reply').click(function (e) {
         e.preventDefault()
-        var $target = $(e.target)
+        var $target = $('.blog-list-reply')
 
         // 获取内容和用户
         var content = $target.attr('data-content')
         var userName = $target.attr('data-userName')
         var nickName = $target.attr('data-nickName')
-
         // 设置内容并获取焦点
-        $textContent.val(' // @' + nickName + ' - ' + userName + ' : ' + content)
-        setCursor($textContent[0], 0, 0)
+        // $textContent.val(' // @' + nickName + ' - ' + userName + ' : ' + content)
+        // setCursor($textContent[0], 0, 0)
+
+
+        $('#exampleModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget) // Button that triggered the modal
+        var recipient =userName// Extract info from data-* attributes
+        // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+        // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+        var modal = $(this)
+        modal.find('.modal-title').text('回复 ' + recipient)
+        modal.find('.modal-body input').val('@' + nickName + ' - ' + userName)
+        
+        $('.hfqx').click(function (e) {
+          // 刷新页面
+          location.href = location.pathname
+        })
+
+
+          $('.hffs').click(function (e) {
+
+            var fsname = modal.find('.fsname').val()
+            var fscontent = modal.find('.fscontent').val()
+
+            // 发布动态
+              var content = fsname+ ': ' + fscontent
+              var imgUrl = ''
+
+              // console.log(content)
+              // 验证
+              if (fscontent.length === 0) {
+                alert('请输入动态内容')
+                return
+              }
+
+              // 发布
+              ajax.post('/api/hole/create', {
+                content: content,
+                image: imgUrl
+              }, function (err) {
+                if (err) {
+                  // 失败
+                  alert(err)
+                  return
+                }
+                // 成功
+                modal.find('.fsname').val('')
+                modal.find('.fscontent').val('')
+
+                // 刷新页面
+                location.href = location.pathname
+              })
+            
+
+
+          })
+      })
+
     })
+    
+
 })
 </script>

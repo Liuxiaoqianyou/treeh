@@ -32,7 +32,7 @@ router.get('/loadMore/:pageIndex', loginCheck, async (ctx, next) => {
   const { id: userId } = ctx.session.userInfo
   const result = await getHomeHoleList(userId, pageIndex)
   // 渲染模板
-  result.data.blogListTpl = getBlogListStr(result.data.blogList)
+  result.data.blogListTpl = getBlogListStr(result.data.blogList,true)
 
   ctx.body = result
 })

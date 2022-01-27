@@ -84,6 +84,12 @@ textarea {
 .navbar-right{
     flex-direction: row;
 }
+.font-size16{
+    font-weight:normal; 
+    font-size: 0.6rem;
+    background-color:#5fc4f3 ;
+
+}
 
 @media only screen and (min-width: 768px) and (max-width: 2048px) {
     .marglef20xp{
