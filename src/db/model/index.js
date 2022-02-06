@@ -6,6 +6,7 @@
 const User = require('./User')
 const Hole = require('./Hole')
 const UserRelation = require('./UserRelation')
+const AtRelation = require('./AtRelation')
 
 //创建外键关联
 Hole.belongsTo(User, {
@@ -24,8 +25,13 @@ Hole.belongsTo(UserRelation, {
     targetKey: 'followerId'
 })
 
+Hole.hasMany(AtRelation, {
+    foreignKey: 'holeId'
+})
+
 module.exports = {
     User,
     Hole,
-    UserRelation
+    UserRelation,
+    AtRelation
 }

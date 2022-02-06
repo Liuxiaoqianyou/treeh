@@ -11,6 +11,7 @@
  const { isExist } = require('../../controller/user')
  const { getFans, getFollowers } = require('../../controller/user-relation')
  const { getHomeHoleList } = require('../../controller/hole-home')
+ const { getAtMeCount, getAtMeBlogList,  markAsRead} = require('../../controller/hole-at')
 
 
 //首页
@@ -29,6 +30,11 @@
    // 获取关注人列表
    const followersResult = await getFollowers(userId)
    const { count: followersCount, followersList } = followersResult.data
+
+   // 获取 @ 数量
+   const atCountResult = await getAtMeCount(userId)
+   const { count: atCount } = atCountResult.data
+
    
     await ctx.render('index', {
       userData: {
@@ -40,7 +46,8 @@
          followersData: {
             count: followersCount,
             list: followersList
-         }
+         },
+         atCount
       },
       blogData: {
          isEmpty,
@@ -100,6 +107,10 @@
       return item.userName === myUserName
    })
 
+      // 获取 @ 数量
+      const atCountResult = await getAtMeCount(myUserInfo.id)
+      const { count: atCount } = atCountResult.data
+
    await ctx.render('profile', {
       blogData: {
          isEmpty,
@@ -119,7 +130,8 @@
             count: followersCount,
             list: followersList
          },
-         amIFollowed
+         amIFollowed,
+         atCount
       }
 
    })
@@ -145,6 +157,37 @@ router.get('/square', loginRedirect, async (ctx, next) => {
  //发布页
  router.get('/release', loginRedirect, async (ctx, next) => {
    await ctx.render('release', {})
+})
+
+
+// atMe 路由
+router.get('/at-me', loginRedirect, async (ctx, next) => {
+   const { id: userId } = ctx.session.userInfo
+
+   // 获取 @ 数量
+   const atCountResult = await getAtMeCount(userId)
+   const { count: atCount } = atCountResult.data
+
+   // 获取第一页列表
+   const result = await getAtMeBlogList(userId)
+   const { isEmpty, blogList, pageSize, pageIndex, count } = result.data
+
+   // 渲染页面
+   await ctx.render('atMe', {
+       atCount,
+       blogData: {
+           isEmpty,
+           blogList,
+           pageSize,
+           pageIndex,
+           count
+       }
+   })
+
+   // 标记为已读
+   if (atCount > 0) {
+       await markAsRead(userId)
+   }
 })
 
  module.exports = router
