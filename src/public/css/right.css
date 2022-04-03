@@ -27,3 +27,23 @@
 .right-item .user-list .user-item img {
     width: 100%;
 }
+
+
+@media only screen and (max-width: 500px) {
+    .header-img {
+        width: 30px !important;
+        height: 30px !important;
+    }
+    .right-item .user-info .user-name {
+        line-height: 30px !important;
+        margin-left: 40px !important;
+    }
+    .fsimg{
+        width: 30px !important;
+        height: 30px !important;
+    }
+    .gzimg{
+        width: 30px !important;
+        height: 30px !important;
+    }
+}

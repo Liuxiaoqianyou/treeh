@@ -117,4 +117,7 @@ textarea {
     .carousel-item img{
          height: 200px !important;
     }
+    #carouselExampleFade .carousel-inner img{
+        height: 100px !important;
+    }
 }
